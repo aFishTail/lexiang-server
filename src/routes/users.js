@@ -1,11 +1,13 @@
 const router = require('koa-router')()
 
 const { isExeit, register, login, changeInfo, changePassword } = require('../controller/user')
+const userValitate = require('../validator/user')
+const {genValidator} = require('../middlewares/valitator')
 
 router.prefix('/users')
 
 // 用户登录
-router.post('/register', async (ctx, next) => {
+router.post('/register', genValidator(userValitate),async (ctx, next) => {
   console.log('调了登录接口', ctx)
   const { userName, password, nickName } = ctx.request.body
   const result = await register({ userName, password, nickName })
@@ -18,7 +20,7 @@ router.post('/login', async (ctx, next) => {
   ctx.body = result
 })
 
-router.post('/changeInfo', async (ctx, next) => {
+router.post('/changeInfo',genValidator(userValitate), async (ctx, next) => {
   const {
     nickName,
     picture,
@@ -28,7 +30,7 @@ router.post('/changeInfo', async (ctx, next) => {
 })
 
 // 修改密码
-router.post('/changePassword', async (ctx, next) => {
+router.post('/changePassword', genValidator(userValitate),async (ctx, next) => {
   const { password, newPassword } = ctx.request.body
   const { userName } = ctx.session.userInfo
   ctx.body = await changePassword(userName, password, newPassword)

@@ -10,6 +10,7 @@
     "debug": "nodemon --inspect ./bin/www"
   },
   "dependencies": {
+    "ajv": "^6.12.2",
     "cross-env": "^7.0.2",
     "debug": "^2.6.3",
     "koa": "^2.2.0",
