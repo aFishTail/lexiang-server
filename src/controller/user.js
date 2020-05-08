@@ -3,14 +3,15 @@
  * @author wh
  */
 
-const { getUserInfo, createUser, updateUser } = require('../services/user')
+const { getUserInfo, createUser, updateUser, deleteUser } = require('../services/user')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const {
   registerUserNameNotExistInfo,
   registerUserNameExistInfo,
   loginFailInfo,
   changeInfoFailInfo,
-  changePasswordFailInfo
+  changePasswordFailInfo,
+  deleteUserFailInfo
 } = require('../model/ErrorInfos')
 const doCrypto = require('../utils/crypto')
 
@@ -100,27 +101,57 @@ async function changeInfo(ctx, { nickName, picture }) {
  * @param {string} newPassword 新密码
  */
 async function changePassword(userName, password, newPassword) {
-    const result = await updateUser(
-        {
-            newPassword: doCrypto(newPassword)
-        },
-        {
-            userName,
-            password: doCrypto(password)
-        }
-    )
+  const result = await updateUser(
+    {
+      newPassword: doCrypto(newPassword),
+    },
+    {
+      userName,
+      password: doCrypto(password),
+    }
+  )
+  if (result) {
+    // 成功
+    return new SuccessModel()
+  }
+  // 失败
+  return new ErrorModel(changePasswordFailInfo)
+}
+
+/**
+ * 退出登录
+ * @param {Object} ctx ctx
+ */
+async function logout(ctx) {
+  ctx.session.userInfo = null
+  return new SuccessModel()
+}
+
+/**
+ * 删除用户
+ * @param {Object} ctx ctx
+ */
+/**
+ * 删除当前用户
+ * @param {string} userName 用户名
+ */
+async function deleteCurUser(userName) {
+    const result = await deleteUser(userName)
     if (result) {
         // 成功
         return new SuccessModel()
     }
     // 失败
-    return new ErrorModel(changePasswordFailInfo)
+    return new ErrorModel(deleteUserFailInfo)
 }
+
 
 module.exports = {
   isExist,
   register,
   login,
   changeInfo,
-  changePassword
+  changePassword,
+  logout,
+  deleteCurUser
 }

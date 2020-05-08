@@ -77,8 +77,18 @@ async function updateUser(
   return result.length > 0
 }
 
+async function deleteUser (userName) {
+    const result = await User.destroy({
+        where: {
+            userName
+        }
+    })
+    // result 删除的行数
+    return result > 0
+}
 module.exports = {
   getUserInfo,
   createUser,
   updateUser,
+  deleteUser
 }
