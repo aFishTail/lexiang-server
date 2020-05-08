@@ -11,6 +11,7 @@ const redisStore = require('koa-redis')
 // 路由
 const index = require('./routes/index')
 const users = require('./routes/users')
+const blogs = require('./routes/blogs')
 
 //常量
 const { SESSION_SECRET_KEY } = require('./config/secretKeys')
@@ -56,6 +57,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(blogs.routes(), blogs.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

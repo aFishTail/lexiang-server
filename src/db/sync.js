@@ -7,7 +7,7 @@ const User= require('./models/user')
 seq.sync({ force: true }).then(() => {
     console.log('数据同步成功')
     User.create({
-        username: 'wh2',
+        userName: 'wh2',
         password: '123'
     }).then(() => {
         console.log('新增成功')
