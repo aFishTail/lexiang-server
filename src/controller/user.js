@@ -132,17 +132,17 @@ async function logout(ctx) {
  * @param {Object} ctx ctx
  */
 /**
- * 删除当前用户
+ * 删除当前用户 
  * @param {string} userName 用户名
  */
 async function deleteCurUser(userName) {
-    const result = await deleteUser(userName)
-    if (result) {
-        // 成功
-        return new SuccessModel()
-    }
-    // 失败
-    return new ErrorModel(deleteUserFailInfo)
+  const result = await deleteUser(userName)
+  if (result) {
+    // 成功
+    return new SuccessModel()
+  }
+  // 失败
+  return new ErrorModel(deleteUserFailInfo)
 }
 
 

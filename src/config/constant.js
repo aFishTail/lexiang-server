@@ -1,3 +1,3 @@
 module.exports = {
-    DEFAULT_PICTURE: '/images/lishifu.jpg'
+  DEFAULT_PICTURE: '/images/lishifu.jpg'
 }

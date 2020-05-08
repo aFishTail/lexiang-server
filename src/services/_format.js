@@ -10,12 +10,12 @@ const { DEFAULT_PICTURE } = require('../config/constant')
  * @param {Object} obj 用户对象
  */
 function formatUserPicture(obj) {
-    if(obj.picture == null) {
-        obj.picture = DEFAULT_PICTURE
-    }
-    return obj
+  if(obj.picture == null) {
+    obj.picture = DEFAULT_PICTURE
+  }
+  return obj
 }
 
 module.exports = {
-    formatUserPicture
+  formatUserPicture
 }

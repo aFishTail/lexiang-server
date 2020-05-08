@@ -11,19 +11,19 @@ const { jsonSchemaFileInfo } = require('../model/ErrorInfos')
  * @param {function} valitateFn 验证函数
  */
 function genValidator(valitateFn) {
-    async function validator(ctx, next) {
-        const data = ctx.request.body
-        const error = valitateFn(data)
-        if(error) {
-            // 验证失败
-            ctx.body = new ErrorModel(jsonSchemaFileInfo)
-            return
-        }
-        // 验证成功，继续
-        await next()
+  async function validator(ctx, next) {
+    const data = ctx.request.body
+    const error = valitateFn(data)
+    if(error) {
+      // 验证失败
+      ctx.body = new ErrorModel(jsonSchemaFileInfo)
+      return
     }
-    return validator
+    // 验证成功，继续
+    await next()
+  }
+  return validator
 }
 module.exports = {
-    genValidator
+  genValidator
 }
